@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 
-declare let gtag: Function;
+declare var gtag: Function;
 
 @Component({
   selector: 'app-root',
@@ -16,20 +16,28 @@ export class AppComponent {
   title = 'GoogleaAnlyPOC';
 
   constructor(private router: Router) {
+    this.router.events.pipe(filter((event : any) => event instanceof NavigationEnd))
+    .subscribe((event : NavigationEnd) => {
+        gtag('config', 'G-HVQQLLQ3LR',
+            {
+                'page_path': event.urlAfterRedirects
+            }
+        );
+    });
   }
   
-  ngOnInit() {
-    this.setUpAnalytics();
-}
+//   ngOnInit() {
+//     this.setUpAnalytics();
+//   }
 
-setUpAnalytics() {
-    this.router.events.pipe(filter((event : any) => event instanceof NavigationEnd))
-        .subscribe((event : NavigationEnd) => {
-            gtag('config', 'G-HVQQLLQ3LR',
-                {
-                    'page_path': event.urlAfterRedirects
-                }
-            );
-        });
-}
+//   setUpAnalytics() {
+//     this.router.events.pipe(filter((event : any) => event instanceof NavigationEnd))
+//         .subscribe((event : NavigationEnd) => {
+//             gtag('config', 'G-HVQQLLQ3LR',
+//                 {
+//                     'page_path': event.urlAfterRedirects
+//                 }
+//             );
+//         });
+// }
 }
