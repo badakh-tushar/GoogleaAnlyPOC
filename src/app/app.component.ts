@@ -20,7 +20,8 @@ export class AppComponent {
     .subscribe((event : NavigationEnd) => {
         gtag('config', 'G-HVQQLLQ3LR',
             {
-                'page_path': event.urlAfterRedirects
+                'page_path': event.urlAfterRedirects,
+                'page_view': event.urlAfterRedirects
             }
         );
     });
