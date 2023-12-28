@@ -7,6 +7,13 @@ import { Component } from '@angular/core';
   styleUrl: './student.component.css'
 })
 export class StudentComponent {
+declare gtag : Function;
+
+  constructor(){
+    this.gtag('event','screen_view',{
+      'screen_name' : 'Student'
+    });
+  }
 
 }
  
